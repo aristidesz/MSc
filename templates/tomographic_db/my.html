@@ -1,0 +1,43 @@
+{%extends "base.html" %}
+
+{% block content %}
+
+
+<h2>Hello, welcome home</h2>
+<!--
+<form method="POST" action="">{% csrf_token %}
+{{form.as_p}}
+<input type="submit" value='Join' class="btn"/>
+</form>
+-->
+
+<form method="POST" action="">{% csrf_token %}
+<p><label for="id_imageName">Form imagename:</label>
+    <input id="id_imageName" type="text" name="form_imageName" maxlength="100" /></p>
+<input type="submit" value='Join' class="btn"/>
+</form>
+<p> {% if images_list %}
+    
+    {% for tomoImages in images_list %}
+
+<img src="{{ tomoImages.image.url }}" alt="Mountain View" style="width:40%;height:60%;    display: block;margin-left: auto;margin-right: auto;">
+
+    {% endfor %}
+    
+{% else %}
+    <p>No objects are available.</p>
+{% endif %}
+</p>
+
+<p>
+
+<form action="tomographic_db/" >
+<select name="FormTomoImages">
+  <option value="50KmRani">50Km</option>
+  <option value="100KmRani">100Km</option>
+</select>
+<input type="submit" value="Submit">
+</form>
+
+
+{% endblock %}

@@ -1,0 +1,38 @@
+
+<!DOCTYPE html>
+{% load staticfiles %}
+<html>
+<head>
+
+	
+</head>
+<body>
+<p> {% if images_list %}
+    
+    {% for tomoImages in images_list %}
+
+<img src="{{ tomoImages.image.url }}" alt="Mountain View" style="width:40%;height:60%;    display: block;margin-left: auto;margin-right: auto;">
+
+    {% endfor %}
+    
+{% else %}
+    <p>No objects are available.</p>
+{% endif %}
+</p>
+
+<p>
+
+<form action="tomographic_db/" >
+<select name="getImage">
+  <option value="50KmRani">50Km</option>
+  <option value="100KmRani">100Km</option>
+</select>
+<input type="submit" value="Submit">
+</form>
+
+
+
+ </p>
+</body>
+</html>
+

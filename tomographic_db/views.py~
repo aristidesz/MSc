@@ -1,0 +1,44 @@
+from django.http import HttpResponse
+from django.shortcuts import render
+from django.http import Http404
+# Create your views here.
+from django.shortcuts import render_to_response
+from django.template import RequestContext
+from django.template.loader import render_to_string
+from django.http import HttpResponse
+from django.http import HttpResponseRedirect
+from .models import tomoImages
+from tomographic_db.models import tomoImages
+from django.http import HttpResponse
+from django.template import RequestContext, loader
+from django.shortcuts import HttpResponse
+from django.conf import settings
+from django.template import RequestContext, Template, Context
+
+
+def detail(request, imageName):
+    return HttpResponse("You're looking at images with name %s." % imageName)
+
+def index(request):
+	images_list = tomoImages.objects.all()
+	template = loader.get_template('tomographic_db/home.html')
+	context = RequestContext(request,{'images_list': images_list,})
+	return HttpResponse(template.render(context))
+
+
+from django.shortcuts import render
+from django.http import HttpResponseRedirect
+
+from .forms import FormTomoImages
+
+def createTomoImages(request):
+        if request.method == 'POST':
+            form = FormTomoImages(request.POST)
+            if form.is_valid():
+                tomo_model = tomoImages()
+                tomo_model.imageName = form.cleaned_data.get('form_imageName', 'default1')
+                my_model.save()
+        else:        
+            form = FormTomoImages()
+        context_data = {'form': form}
+        return HttpResponse('templtate.html', context_data)

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html>
+<head>
+  <meta charset="utf-8">
+  
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+
+<title>SGlobe-rani</title>
+<link rel="icon" type="image/png" href="http://sysmic.ac.uk/static/img/ucl.png" />
+
+
+<!--Styles -->
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+
+
+
+
+
+
+
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+
+<script
+  src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script
+  src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+  
+</head>
+<body>
+<div id="maincontainer">
+<div id="fixedheader">
+<nav class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container-fluid">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+          <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">SGlobe-rani Model</a>
+    </div>
+    <div>
+      <div class="collapse navbar-collapse" id="myNavbar">
+        <ul class="nav navbar-nav">
+          <li><a href="tomographic_db">Explore Model</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</nav>
+</div>
+<div id="topsection"><div class="innertube">
+
+<img src="{% static 'JGR_figures/main1.png' %}" alt="Mountain View" style="width:40%;height:60%;">
+
+</div></div>
+<div id="wrapper">
+<div id="contentwrapper">
+<div id="contentcolumn">
+<div class="innertube">
+<!--
+<div data-spy="scroll" data-target=".navbar" data-offset="12" class="innertube">
+-->
+<div class="innertube">
+  
+  <div id="About">
+    <div class="container-fluid">
+        <h2>About the Model</h2>
+        <p>SGLOBE-rani Model is a new global whole-mantle model of isotropic and radially anisotropic S-velocity structure. It is based on approximately 43,000,000 surface-wave and 420,000 body-wave travel time measurements which are expanded in spherical harmonics basis functions up to degree 35. The model takes into account short-period group velocity data with period range at 16 seconds. Thus, these data are strongly sensitive to the crust perturbations which are incorporated in the model. The isotropic S-velocity of the model are in a high agreement with previous upper mantle models. The anisotropic model is in an agreement with previous models; however; it shows some deviations for faster SV velocity along subduction zones at transition depths and faster SH velocity beneath slabs in the lower mantle.</p>
+<p>
+The main differences from previous studies for isotropic and radially anisotropic whole-mantle model are that: SGLOBE-rani use a larger dataset of body-wave travel times and surface wave dispersion measurements including short-period group velocity data and secondly, it inverts jointly for isotropic, anisotropic and crustal thickness perturbations as model parameters. </p>
+<p>
+<button type="button" class="button" onclick="window.location.href='tomographic_db'" >Explore Model</button>
+
+</p>
+    </div>
+  </div>
+  
+  </div>
+  
+  </div>
+
+
+</div>
+</div>
+</div>
+
+
+
+</div>
+
+
+</div>
+
+<div id="footer">
+
+  
+  
+  <div id="department">
+    <div id="linefooter">
+  </div>
+  
+    Copyright © <script type="text/javascript">
+    var d = new Date()
+    document.write(d.getFullYear())
+    </script>
+    Aristides Zenonos
+  </div>
+  </div>
+<!-- SCRIPTS -->
+
+<link rel="stylesheet" type="text/css" href="{% static 'css/style_home.css' %}">
+
+<!--
+<script src="externalfile:drive-ca5911c4485d18a13157efbccd2d302b4d6cf142/root/MSc Individual Project/javascript/scrollspy.js"></script>
+-->
+
+
+
+</body>
+</html>
+
