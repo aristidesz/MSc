@@ -104,6 +104,8 @@ overflow:hidden;
 
 #contentcolumn{
 display:inline-block;
+width:100%;
+height:auto;
 }
 
 .icon-bar{
@@ -112,7 +114,7 @@ display:inline-block;
 
 #footer{
 clear: both;
-position: absolute;
+position: fixed;
 width: 100%;
 bottom:0;
 background: #363636;
@@ -123,7 +125,7 @@ height:5%;
 }
 
 #department{
-position: absolute;
+position: fixed;
 margin: 0 auto;
 bottom:0;
 color: #9C9C9C;
