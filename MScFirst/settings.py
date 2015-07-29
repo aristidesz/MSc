@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BASE = os.path.abspath(os.path.dirname(__name__))
 
@@ -42,6 +43,8 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'home',
     'tomographic_db',
+    'djcelery',
+    'kombu.transport.django',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -116,3 +119,6 @@ import os
 CURRENT_PATH = os.path.abspath(os.path.dirname(__file__).decode('utf-8'))
 MEDIA_ROOT = os.path.join(CURRENT_PATH, 'media').replace('\\','/')
 MEDIA_URL = '/media/'
+
+
+BROKER_URL = 'django://'

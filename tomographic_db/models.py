@@ -19,4 +19,11 @@ class globeImages(models.Model):
 	def globeImage(self):    
 		return '<img src="%s" height="150"/>' % (self.globeImage)
 
- 
+class GMTImages(models.Model):
+    GMTImageName = models.CharField(max_length=200)
+    GMTImage = models.ImageField(upload_to='GMT_Images')
+    def __unicode__(self):              # __unicode__ on Python 2
+        return self.GMTImageName
+
+
+
