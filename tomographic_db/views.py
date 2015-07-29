@@ -60,8 +60,29 @@ def image(request):
 		print new_GlobeImages.globeImage.url
 		text = open(os.path.join(settings.MEDIA_ROOT, 'dvp.cpt')).read()
 		
+
+		context = RequestContext(request,{'new_GlobeImages':new_GlobeImages,})
+		return HttpResponse(template.render(context))
+	elif form.is_valid():
+		imageName= form.cleaned_data['form_imageName']
+		new_TomoImages= tomoImages.objects.get(imageName=imageName)
+		print new_TomoImages
+		print new_TomoImages.image.url
+		print "1"
+		context = RequestContext(request,{'new_TomoImages': new_TomoImages,})
+		return HttpResponse(template.render(context))
+	elif formGMT.is_valid():
+		GMTlatMAX = formGMT.cleaned_data['form_latMAX']
+		GMTlatMIN=formGMT.cleaned_data['form_latMIN']
+		GMTlonMAX=formGMT.cleaned_data['form_lonMAX']
+		GMTlonMIN=formGMT.cleaned_data['form_lonMIN']	
+		GMTDepth= formGMT.cleaned_data['form_Depth']
+		GMTImageName = GMTDepth+GMTlatMAX+GMTlatMIN+GMTlonMAX+GMTlonMIN
+		print GMTlatMAX, GMTlatMIN,GMTlonMAX,GMTlonMIN, GMTDepth,GMTImageName	
 		subpro('''
-		set OUTFILEmy=$PWD/MScFirst/media/GMT_Images/dept-slices; 
+		set file = {2};
+		echo $file;
+		set OUTFILEmy=$PWD/MScFirst/media/GMT_Images/$file; 
 		set dx = 0.703125;
 		# set PROJ = -JKs160/7.0;						
 		# set REG = -Rg;							
@@ -86,25 +107,7 @@ def image(request):
 		convert $OUTFILEmy.eps $OUTFILEmy.jpg
 		rm $OUTFILEmy.eps;
 		rm $OUTFILEmy.ps tmp.*;
-		''')
-		context = RequestContext(request,{'new_GlobeImages':new_GlobeImages,})
-		return HttpResponse(template.render(context))
-	elif form.is_valid():
-		imageName= form.cleaned_data['form_imageName']
-		new_TomoImages= tomoImages.objects.get(imageName=imageName)
-		print new_TomoImages
-		print new_TomoImages.image.url
-		print "1"
-		context = RequestContext(request,{'new_TomoImages': new_TomoImages,})
-		return HttpResponse(template.render(context))
-	elif formGMT.is_valid():
-		GMTlatMAX = formGMT.cleaned_data['form_latMAX']
-		GMTlatMIN=formGMT.cleaned_data['form_latMIN']
-		GMTlonMAX=formGMT.cleaned_data['form_lonMAX']
-		GMTlonMIN=formGMT.cleaned_data['form_lonMIN']	
-		GMTDepth= formGMT.cleaned_data['form_Depth']
-		GMTImageName = GMTDepth+GMTlatMAX+GMTlatMIN+GMTlonMAX+GMTlonMIN
-		print GMTlatMAX, GMTlatMIN,GMTlonMAX,GMTlonMIN, GMTDepth,GMTImageName	
+		''',GMTImageName)
 		pic = GMTImages()
 		pic.GMTImageName = GMTImageName
 		pic.GMTImage = "GMT_Images/"+GMTImageName+".jpg"

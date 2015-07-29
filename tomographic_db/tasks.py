@@ -18,10 +18,13 @@ def xsum(numbers):
     return sum(numbers)
 
 @shared_task
-def subpro(command):
+def subpro(command, name):
+	MyImageName = name
 	REG='-Rg'
 	PROJ = '-JKs160/7.0'
-	process = subprocess.Popen(command.format(REG,PROJ),executable="/bin/csh",stdout=subprocess.PIPE, shell=True)
+	print "Hello" +MyImageName
+	print REG
+	process = subprocess.Popen(command.format(REG,PROJ,MyImageName),executable="/bin/csh",stdout=subprocess.PIPE, shell=True)
 	proc_stdout = process.communicate()[0].strip()
 	print proc_stdout
 	
