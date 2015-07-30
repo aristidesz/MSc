@@ -1,4 +1,38 @@
+.container{
+    width: 110px;
+    height: 110px;
+    margin: 100px auto;
+}
+.prec{
+    top: 30px;
+    position: relative;
+    font-size: 30px;
+}
 
+.circle{
+    position: relative;
+    top: 5px;
+    left: 5px;
+    text-align: center;
+    width: 100px;
+    height: 100px;
+    border-radius: 100%;
+    background-color: #E6F4F7;
+}
+
+.active-border{
+    position: relative;
+    text-align: center;
+    width: 110px;
+    height: 110px;
+    border-radius: 100%;
+
+    background-color:#39B4CC;
+    background-image:
+        linear-gradient(91deg, transparent 50%, #A2ECFB 50%),
+        linear-gradient(90deg, #A2ECFB 50%, transparent 50%);
+    
+}
 
 html,body{
   margin: 0px;
@@ -25,75 +59,7 @@ em{color: red;}
 .innertube b{
   
 }
-@import "compass/css3";
 
-.wrappercircle {
-  position: relative;
-  margin: 40px auto;
-  background: white;
-}
-
-@mixin timer($item, $duration, $size, $color, $border, $hover: running) {
-  #{$item}, #{$item} * { @include box-sizing(border-box); }
-
-  #{$item} { 
-    width: $size;
-    height: $size;
-  }
-
-  #{$item} .pie {
-    width: 50%;
-    height: 100%;
-    transform-origin: 100% 50%;
-    position: absolute;
-    background: $color;
-    border: #{$border};
-  }
-
-  #{$item} .spinner {
-    border-radius: 100% 0 0 100% / 50% 0 0 50%;
-    z-index: 200;
-    border-right: none;
-    animation: rota $duration + s linear infinite;
-  }
-
-  #{$item}:hover .spinner,
-  #{$item}:hover .filler, 
-  #{$item}:hover .mask {
-    animation-play-state: $hover;    
-  }
-
-  #{$item} .filler {
-    border-radius: 0 100% 100% 0 / 0 50% 50% 0; 
-    left: 50%;
-    opacity: 0;
-    z-index: 100;
-    animation: opa $duration + s steps(1,end) infinite reverse;
-    border-left: none;
-  }
-
-  #{$item} .mask {
-    width: 50%;
-    height: 100%;
-    position: absolute;
-    background: inherit;
-    opacity: 1;
-    z-index: 300;
-    animation: opa $duration + s steps(1,end) infinite;
-  }
-
-  @keyframes rota {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-  }
-
-  @keyframes opa {
-    0% { opacity: 1; }
-    50%, 100% { opacity: 0; }
-  }
-}
-
-@include timer('.wrapper', 5, 250px, #08C, '5px solid rgba(0,0,0,0.5)');
 .navbar-inverse {
 background: #363636;
 border: #363636;
@@ -105,6 +71,42 @@ border: #363636;
 color: #9C9C9C;
 color: #FFF;
 }
+.retrieve_img{
+  visibility: hidden;
+}
+.button {
+   border-top: 1px solid #616263;
+   background: #313436;
+   background: -webkit-gradient(linear, left top, left bottom, from(#202121), to(#313436));
+   background: -webkit-linear-gradient(top, #202121, #313436);
+   background: -moz-linear-gradient(top, #202121, #313436);
+   background: -ms-linear-gradient(top, #202121, #313436);
+   background: -o-linear-gradient(top, #202121, #313436);
+   padding: 8px 16px;
+   -webkit-border-radius: 16px;
+   -moz-border-radius: 16px;
+   border-radius: 16px;
+   -webkit-box-shadow: rgba(0,0,0,1) 0 1px 0;
+   -moz-box-shadow: rgba(0,0,0,1) 0 1px 0;
+   box-shadow: rgba(0,0,0,1) 0 1px 0;
+   text-shadow: rgba(0,0,0,.4) 0 1px 0;
+   color: #9c9c9c;
+   font-size: 21px;
+   font-family: Georgia, Serif;
+   text-decoration: none;
+   vertical-align: middle;
+    margin:0 auto;
+    display:block;
+   }
+.button:hover {
+   border-top-color: #919191;
+   background: #919191;
+   color: #ffffff;
+   }
+.button:active {
+   border-top-color: #787878;
+   background: #787878;
+   }
 #topsection{
   padding-top:20px;
 text-align: center;
@@ -138,22 +140,20 @@ overflow:hidden;
 display:inline-block;
 }
 
-#ReferencesStyle{
-  width: 100%;
-  height: auto;
-  text-align: justify;
+.icon-bar{
+  margin-top: 25%
 }
 
 #footer{
 clear: both;
-position: relative;
+position: absolute;
 width: 100%;
 bottom:0;
 background: #363636;
 color: #FFF;
 text-align: center;
 padding: 2%;
-height:40%;
+height:5%;
 }
 
 #department{
@@ -169,27 +169,22 @@ color: #9C9C9C;
 }
 
 
-#linefooter {
-    display: block;
-    border-top: 1px solid #7D7D7D;
-    padding: 0.5%;
-    width: 40%;
-    margin: 0 auto;
-}
+
 h2 {
     text-align: center;
 }
+
 h3 {
-    text-align: justify;
-    font-size: 20px;
+    text-align: center;
 }
+
 p{
     text-align: justify;
     text-justify: inter-word;
 }
 
 .innertube b {
-  margin: 20px;
+  margin: 15px;
 }
 #footer .container-table{
   height: auto;
@@ -197,22 +192,7 @@ p{
   float: left;
 }
 
-.column-left{
- 
-  width: 33%;
-  line-height:250%;
-   float: left;
-}
-.column-right{ 
-float: right; 
-width: 33%;
-line-height:250%; 
-}
-.column-center{
-float:left;
- width: 33%; 
- line-height:250%;
- }
+
 
 .innertube{
 margin: 10px; /*Margins for inner DIV inside each column (to provide padding)*/
@@ -256,14 +236,14 @@ height:auto;
 }
 #footer{
 clear: both;
-position: relative;
+position: absolute;
 width: 100%;
 bottom:0;
 background: #363636;
 color: #FFF;
 text-align: center;
 padding: 2%;
-height:70%;
+height:5%;
 }
 }
 

@@ -24,11 +24,14 @@ import subprocess
 import csv
 from django.core.files.storage import default_storage
 from django.core.files.base import ContentFile
-from .tasks import *
+from tomographic_db.tasks import add,subpro
 from celery import task
+from celery import subtask
 from celery.task import task
 from celery.task.base import task
-from .tasks import subpro as subpro
+from celery.task.sets import subtask
+from celery import chain
+import pdb
 
 def detail(request, imageName):
     return HttpResponse("You're looking at images with name %s." % imageName)
@@ -83,7 +86,7 @@ def image(request):
 		flName=gmtImages.objects.filter(gmtImageName=gmtImageName)
 
 		if flName.count() == 0:
-			subpro('''
+			prc1=subpro.delay('''
 			set file = {2};
 			echo $file;
 			set OUTFILEmy=$PWD/MScFirst/media/GMT_Images/$file; 
@@ -112,11 +115,11 @@ def image(request):
 			rm $OUTFILEmy.eps;
 			rm $OUTFILEmy.ps tmp.*;
 			''',gmtImageName)
+			prc1.get()
 			pic = gmtImages()
 			pic.gmtImageName = gmtImageName
 			pic.gmtImage = "GMT_Images/"+gmtImageName+".jpg"
 			pic.save()
-
 		new_GMTImage=gmtImages.objects.get(gmtImageName=gmtImageName)
 		#print new_GMTImage.gmtImage.url
 		context = RequestContext(request,{'new_GMTImage': new_GMTImage,})

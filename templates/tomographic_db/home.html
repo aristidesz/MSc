@@ -125,13 +125,18 @@
 
       </select>
       </p>
-      <input type="submit" value="Submit" class="btn" onclick="showImg()" />
+      <input type="submit" value="Submit" class="btn" onclick="this.form.submit(); $('#spinnerContainer').toggle();this.disabled=true; this.value='Processing Request...'; "/>
     </form>
 
-
 </p>
+<div id="spinnerContainer" class="spinner" style="display:none">
+</div>
+
+
+
 </div>
 </div>
+
 <div id="Data">
   <div class="container-fluid">
     <h2>Data
@@ -386,8 +391,9 @@ lon(document.getElementById("lonMIN"));
 <script type="text/javascript"
 src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
 </script>
-<script src="{% static 'javascript/main.js' %}"></script>
 
+<script src="{% static 'javascript/spin.js' %}"></script>
+<script src="{% static 'javascript/main.js' %}"></script>
 </body>
 </html>
 
