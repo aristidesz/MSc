@@ -118,26 +118,36 @@ bottom:0;
 background: #363636;
 color: #FFF;
 text-align: center;
-padding: 2%;
+padding: 1%;
 height:5%;
 }
 
 #department{
-position: absolute;
+position: relative;
 margin: 0 auto;
 bottom:0;
 color: #9C9C9C;
-width: 100%;
-margin-left: -2%;
+width: 99%;
+
 }
 #footer a{
 color: #9C9C9C;
 }
 
+#fds { font-size: 0; 
+    margin: auto;
+    width: 40%;
+    overflow: hidden;
+}
+#fds img { width: 50%; opacity: 0; display: inline-block; overflow: hidden;}
+
+@keyframes fdsseq { 100% { opacity: 1; width: 100%; padding: 10px;} }
+#fds img { animation: fdsseq .2s forwards; }
 
 
 h2 {
     text-align: center;
+    color:#1919ff;
 }
 
 h3 {

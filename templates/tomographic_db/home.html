@@ -1,5 +1,3 @@
- 
-
 <!DOCTYPE html>
 {% load staticfiles %}
 <html>
@@ -15,9 +13,7 @@
  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
 
 
-
-
-
+ <script src="http://www.webglearth.com/v2/api.js"></script>
 
 
 
@@ -29,10 +25,9 @@
  src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 
 
-
 </head>
-<body>
-
+<body onload="initialize()">
+<div id="overlay"></div>
   <div id="maincontainer">
     <div id="fixedheader">
       <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -60,7 +55,6 @@
     </div>
     <div id="topsection"><div class="innertube">
 
-      <img src="{% static 'JGR_figures/main1.png' %}" alt="Mountain View" style="width:40%;height:60%;">
 
     </div></div>
     <div id="wrapper">
@@ -87,48 +81,59 @@
 
 
   </p>
-
+  <div id="fds">
+    <img src="{% static 'JGR_figures/fig1.jpg' %}" alt="MyImage" class="img-circle">
+    <img src="{% static 'JGR_figures/fig12.png' %}" alt="MyImage"class="img-circle">
+    <img src="{% static 'JGR_figures/fig13.png' %}" alt="MyImage"class="img-circle">
+  </div>
   <h2>Regional Model Comparisons</h2>
   <p>The regional analysis allows comparisons of specific zones on Earth. For example, subduction zones, the lithosphere-asthenosphere boundary, depth extend of continents, mid-ocean ridges, mantle plumes etc. Choose the parameters from the list below to see the respective image.
-    <form action="/tomographic_db/image/" method="GET" >{% csrf_token %}
-      <select id="id_imageName" type="text" name="form_imageName" maxlength="100" />
-      {% for tomoImages in images_list %}
-      <option for="id_imageName">{{tomoImages}}</option>
-      {% endfor %}
-    </select>
-    <input type="submit" value="Submit" class="btn" onclick="showImg()" />
-  </form>
+    <div id="comwrapper">
+      <div id="formwrapper">
+        <form action="/tomographic_db/image/" method="GET" >{% csrf_token %}
+          <select id="id_imageName" type="text" name="form_imageName" maxlength="100" />
+          {% for tomoImages in images_list %}
+          <option for="id_imageName">{{tomoImages}}</option>
+          {% endfor %}
+        </select>
+        <input type="submit" value="Submit" class="btn" onclick="showImg()" />
+      </form>
 
-    <form action="/tomographic_db/image/" method="GET" >{% csrf_token %}
-      <p>Select Depth:
-      <select id='demo' name='form_Depth'>
+      <form action="/tomographic_db/image/" method="GET" >{% csrf_token %}
+        <p>Select Depth:
+          <select id='demo' name='form_Depth'>
       <!--<option value="100">100</option>
       <option value="200">200</option> -->
-      </select>
-      </p>
-      <p>Select Max Longitude:
-      <select id='lonMAX' name = 'form_lonMAX'>
+    </select>
+  </p>
+  <p>Select Max Longitude:
+    <select id='lonMAX' name = 'form_lonMAX'>
 
-      </select>
-      </p>
-      <p>Select Min Longitude:
-      <select id='lonMIN' name = 'form_lonMIN'>
+    </select>
+  </p>
+  <p>Select Min Longitude:
+    <select id='lonMIN' name = 'form_lonMIN'>
 
-      </select>
-      </p>
-      <p>Select Max Latitude:
-      <select id='latMAX' name = 'form_latMAX'>
+    </select>
+  </p>
+  <p>Select Max Latitude:
+    <select id='latMAX' name = 'form_latMAX'>
 
-      </select>
-      <p>Select Min Latitude:
+    </select>
+    <p>Select Min Latitude:
       <select id='latMIN' name = 'form_latMIN'>
 
       </select>
-      </p>
-      <input type="submit" value="Submit" class="btn" onclick="this.form.submit(); $('#spinnerContainer').toggle();this.disabled=true; this.value='Processing Request...'; "/>
-    </form>
+    </p>
+    <input type="submit" value="Submit" class="btn" onclick="this.form.submit(); $('#spinnerContainer').toggle();this.disabled=true; this.value='Processing Request...'; "/>
+  </form>
 
 </p>
+</div>
+<div id="earth_div">
+<input type="button" value="Get centre coordinates" onclick="getCurrentCenter()"><br>
+</div>
+
 <div id="spinnerContainer" class="spinner" style="display:none">
 </div>
 
@@ -328,24 +333,25 @@
 Aristides Zenonos
 </div>
 </div>
-<!-- SCRIPTS -->
 
+<!-- SCRIPTS -->
+<link rel="stylesheet" type="text/css" href="{% static 'css/styleDoc.css' %}">
 <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
 <!--
 <script src="javascript/scrollspy.js"></script>
 -->
 <script type="text/javascript">
-function myFunction(selector)
-{
+  function myFunction(selector)
+  {
     var i;
     var j;
     j=100;
     for (i=1;i<=10;i++){
-      
+
       selector.options[i-1] = new Option(j,j);
       j=j+100;
     }
-}
+  }
 //usage:
 myFunction(document.getElementById("demo"));
 function lat(selector)
@@ -353,11 +359,11 @@ function lat(selector)
   var i;
   var j;
   j=1;
-     for (i=1;i<=90;i++){
-      
-      selector.options[i-1] = new Option(j,i);
-      j=j+1;
-    }
+  for (i=1;i<=90;i++){
+
+    selector.options[i-1] = new Option(j,i);
+    j=j+1;
+  }
 }
 lat(document.getElementById("latMAX"));
 lat(document.getElementById("latMIN"));
@@ -366,11 +372,11 @@ function lon(selector)
   var i;
   var j;
   j=1;
-     for (i=1;i<=180;i++){
-      
-      selector.options[i-1] = new Option(j,i);
-      j=j+1;
-    }
+  for (i=1;i<=180;i++){
+
+    selector.options[i-1] = new Option(j,i);
+    j=j+1;
+  }
 }
 lon(document.getElementById("lonMAX"));
 lon(document.getElementById("lonMIN"));
@@ -392,8 +398,28 @@ lon(document.getElementById("lonMIN"));
 src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
 </script>
 
-<script src="{% static 'javascript/spin.js' %}"></script>
-<script src="{% static 'javascript/main.js' %}"></script>
+<script>
+var earth;
+  function initialize() {
+    var options = {atmosphere: true, center: [0, 0], zoom: 0};
+    earth = new WE.map('earth_div', options);
+    WE.tileLayer('http://otile{s}.mqcdn.com/tiles/1.0.0/sat/{z}/{x}/{y}.jpg', {
+      subdomains: '1234',
+      attribution: 'Tiles Courtesy of MapQuest'
+    }).addTo(earth);
+
+  }
+      function getCurrentCenter() {
+        alert(earth.getCenter());
+      }
+
+    $(":submit").click(function() {
+        $("#overlay").show();
+    });
+
+  </script>
+  <script src="{% static 'javascript/spin.js' %}"></script>
+  <script src="{% static 'javascript/main.js' %}"></script>
 </body>
 </html>
 
