@@ -53,21 +53,30 @@ def image(request):
 	form = FormTomoImages(request.GET or None) 
 	form_globe = FormGlobeImages(request.GET or None) 
 	formGMT = FormGMTImage(request.GET or None)
-	
+	images_list = tomoImages.objects.all()
+	images_list_globe = globeImages.objects.all()
+	template = loader.get_template('tomographic_db/home.html')
+	context = RequestContext(request,{'images_list': images_list,'images_list_globe':images_list_globe,})
 	if form_globe.is_valid():
 		template = loader.get_template('tomographic_db/image1.html')
 		globeName= form_globe.cleaned_data['form_globeName']
+		if globeImages.objects.get(globeName=globeName):
+			print "ok"
+		else:
+			return HttpResponse(template.render(context))
 		new_GlobeImages=globeImages.objects.get(globeName=globeName)
 		print "3"
 		print new_GlobeImages
 		print new_GlobeImages.globeImage.url
 		text = open(os.path.join(settings.MEDIA_ROOT, 'dvp.cpt')).read()
-		
-
 		context = RequestContext(request,{'new_GlobeImages':new_GlobeImages,})
 		return HttpResponse(template.render(context))
 	elif form.is_valid():
 		imageName= form.cleaned_data['form_imageName']
+		if tomoImages.objects.get(imageName=imageName):
+			print "ok"
+		else:
+			return HttpResponse(template.render(context))
 		new_TomoImages= tomoImages.objects.get(imageName=imageName)
 		print new_TomoImages
 		print new_TomoImages.image.url
