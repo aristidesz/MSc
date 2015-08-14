@@ -40,10 +40,11 @@ def index(request):
 	print "1"
 	images_list = tomoImages.objects.all()
 	images_list_globe = globeImages.objects.all()
+	question = get_object_or_404(tomoImages, pk=1)
 	print images_list
 	template = loader.get_template('tomographic_db/home.html')
 	#newimages_list = new_TomoImages.objects.all()	
-	context = RequestContext(request,{'images_list': images_list,'images_list_globe':images_list_globe,})
+	context = RequestContext(request,{'images_list': images_list,'images_list_globe':images_list_globe,'question':question})
 	print add(2,2)
 
 	return HttpResponse(template.render(context))
@@ -64,7 +65,10 @@ def image(request):
 			print "ok"
 		else:
 			return HttpResponse(template.render(context))
-		new_GlobeImages=globeImages.objects.get(globeName=globeName)
+		try:
+			new_GlobeImages=globeImages.objects.get(globeName=globeName)
+		except globeImages.DoesNotExist:
+			raise Http404("Image does not exist")
 		print "3"
 		print new_GlobeImages
 		print new_GlobeImages.globeImage.url
@@ -143,3 +147,12 @@ def image(request):
 		template = loader.get_template('tomographic_db/home.html')
 		context = RequestContext(request,{'images_list': images_list,'images_list_globe':images_list_globe,})
 		return HttpResponse(template.render(context))
+
+
+def imageWithID(request, id):
+	return HttpResponse("You're looking at question %s." % id)
+
+
+def datamethod(request):
+	template = loader.get_template('tomographic_db/datamethod.html')
+	return HttpResponse(template.render())

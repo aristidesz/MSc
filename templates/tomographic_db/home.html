@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 {% load staticfiles %}
+{% load url from future %}
 <html>
 <head>
  <meta charset="utf-8">
@@ -43,10 +44,10 @@
           <div>
             <div class="collapse navbar-collapse" id="myNavbar">
               <ul class="nav navbar-nav">
-                <li><a href="#Data">Data
+                <li><a href="datamethod/#Data">Data
                 </a></li>
-                <li><a href="#Methods">Methods</a></li>
-                <li><a href="#References">References</a></li>
+                <li><a href="datamethod/#Methods">Methods</a></li>
+                <li><a href="datamethod/#References">References</a></li>
               </ul>
             </div>
           </div>
@@ -70,7 +71,7 @@
 
      <h2>Global Model Comparisons</h2>
      <p>Global model comparisons involves the computation of correlations between various models, rms power, spectrum etc.
-      <form action="/tomographic_db/image/" method="GET" >{% csrf_token %}
+      <form action="/tomographic_db/image" method="GET" >
         <select id="id_imageName" type="text" name="form_globeName" maxlength="100" />
         {% for globeImages in images_list_globe %}
         <option for="id_imageName">{{globeImages}}</option>
@@ -78,9 +79,22 @@
       </select>
       <input type="submit" value="Submit" class="btn" onclick="showImg()" />
     </form>
+    <p>
 
+    Select to view the gobal tomographic images with respect to each depth.
+    </p>
+            <form action="/tomographic_db/image/" method="GET" >
+          <select id="id_imageName" type="text" name="form_imageName" maxlength="100" />
+          {% for tomoImages in images_list %}
+          <option for="id_imageName">{{tomoImages}}</option>
+          {% endfor %}
+        </select>
+        <input type="submit" value="Submit" class="btn" onclick="showImg()" />
+      </form>
+ <a href="">{{question.id}}</a>
 
   </p>
+
   <div id="fds">
     <img src="{% static 'JGR_figures/fig1.jpg' %}" alt="MyImage" class="img-circle">
     <img src="{% static 'JGR_figures/fig12.png' %}" alt="MyImage"class="img-circle">
@@ -90,16 +104,9 @@
   <p>The regional analysis allows comparisons of specific zones on Earth. For example, subduction zones, the lithosphere-asthenosphere boundary, depth extend of continents, mid-ocean ridges, mantle plumes etc. Choose the parameters from the list below to see the respective image.
     <div id="comwrapper">
       <div id="formwrapper">
-        <form action="/tomographic_db/image/" method="GET" >{% csrf_token %}
-          <select id="id_imageName" type="text" name="form_imageName" maxlength="100" />
-          {% for tomoImages in images_list %}
-          <option for="id_imageName">{{tomoImages}}</option>
-          {% endfor %}
-        </select>
-        <input type="submit" value="Submit" class="btn" onclick="showImg()" />
-      </form>
 
-      <form action="/tomographic_db/image/" method="GET" >{% csrf_token %}
+
+      <form action="/tomographic_db/image/" method="GET" >
         <p>Select Depth:
           <select id='demo' name='form_Depth'>
       <!--<option value="100">100</option>
@@ -142,145 +149,6 @@
 </div>
 </div>
 
-<div id="Data">
-  <div class="container-fluid">
-    <h2>Data
-    </h2>
-    <p>
-      A total of approximately 43,000,000 surface waves measurements and 420,000 travel time data were used. The fundamental mode of phase-velocity dispersion measurements  from Ekström et al. (1997) (1) and Ekström (2011) (2) which covers a period range of 35-300 s and 25-250 s respectively. A higher mode and fundamental-mode phase-velocity data from van Heijst and Woodhouse (1999) (3), Ritsema and van Heijst (2004) (4), Visser et al. (2008) (5), and Ritsema et al. (2011) (6) were used for the period range of 35-375 s. The crustal structure was constrained by using the group-velocity measurements from Ritzwoller and Levshin (1998) (7) with a period range of 16-150 s. Teleseismic body-wave travel time data were obtained from Ritsema et al. (2011) (8).
-    </p>
-
-    <p>
-      Extensive comparisons were made to check the various data sets are consistent with each other before combining all the measurements. Furthermore, several inversion experiments were performed to verify the compatibility of the images obtained using the various sub-sets of data. Due to the availability of common measurements of modes and paths in the various sub-sets of surface waves, the occasional outliers were identified in the original datasets. These outliers were not used in the inversion procedure.
-
-    </p>
-  </div>
-</div>
-<div id="Methods">
-  <div class="container-fluid">
-    <h2>Methods
-    </h2>
-
-    <h3> Theoretical background </h3>
-    <p>The radially anisotropic medium is described by hexagonal symmetry with a vertical axis of symmetry, density and five independent elastic coefficients, A, C, F, L and N which are called Love coefficients. In this model isotropic and radially anisotropic S velocity structure are given by:
-
-      \begin{equation}\label{1} A =\rho V_{PH}^{2} \end{equation} 
-      \begin{equation}\label{2} C =\rho V_{PV}^{2} \end{equation} 
-      \begin{equation}\label{3} L =\rho V_{SV}^{2} \end{equation} 
-      \begin{equation}\label{4} N =\rho V_{SH}^{2} \end{equation}
-      \begin{equation}\label{5} F = {η \over{A-2L}} \end{equation}
-
-
-      where, $ \rho $ is density, V<sub>PH </sub>  and V<sub>PV</sub> are horizontally and vertically polarised P wave velocities, respectively. V<sub>SH</sub>  and V<sub>SV</sub> are horizontally and vertically polarized S wave velocities, respectively, and η is a parameter related to velocities at intermediate angle. In this study isotropic and radially anisotropic S velocity structure are parameterized as in Ferreira et al., 2010: (9)
-      \begin{equation}\label{6} v_{S}^{2} = {1\over 2} (V_{SH}^{2}+V_{SV}^{2})   \text{ and } \zeta_S = {V_{SH}^{2}-V_{SV}^{2}\over 2v_{S}^{2}} \end{equation}
-
-
-    </p>
-
-    <p>
-      In order to keep the problem tractable, the perturbations of V<sub>P</sub> and density to perturbations of V<sub>S</sub> using the scaling relations $ {\delta V_P\over V_P} = 0.5{\delta V_S\over V_S} $    (Robertson and Woodhouse, 1995) (10) and    $ {\delta \rho\over \rho} = 0.4{\delta V_S\over V_S} $    (Anderson et al., 1968), (11) respectively were scaled. These scaling factors are only approximate and there are studies (e.g., Ishii and Tromp, 1999; Resovsky and Trampert, 2003) (12) that found little correlation between density and velocity anomalies in the lowermost mantle. Nevertheless, the body and surface-wave data typically used in tomography studies are much more sensitive to shear wave speed than to compressional velocity and density. Hence, these scaling relations are still widely used in global tomography to reduce the number of parameters in the inversions.
-
-
-
-
-    </p>
-
-    <p>The three physical model parameters in this study are perturbations in isotropic S velocity ($v$<sub>s</sub>), S radial anisotropy (ζ<sub>s</sub>) and crustal thickness (d). The inverse problem is written as:
-
-
-     \begin{equation} \label{7} \delta e = \int_ \text{CMB}^\alpha (K_{v_s}\delta_{v_s}+K_{\zeta_s}\delta \zeta_s+K_d\delta d) \mathrm{d}r \end{equation}
-
-     where $\delta$e is the difference between the data and theoretical calculations for a given reference model, r is the Earth’s radius parameter, α is the Earth’s radius, and δυ<sub>S</sub>, δζ<sub>S</sub>, δd and are perturbations of isotropic S velocity, S radial anisotropy, and crustal thickness. The kernels, K<sub>υ<sub>S</sub></sub>, K<sub>ζ<sub>S</sub></sub>, and K<sub>d</sub> with respect to isotropic S velocity, S anisotropy, and crustal thickness relate the observations to the Earth’s structure parameters, δυ<sub>S</sub>, δζ<sub>S</sub>, δd and and will be discussed in more detail in the next paragraph. 
-   </p>
-
-   <h3> Sensitivity Kernels</h3>
-
-   <p>
-    Sensitivity kernels with respect to phase velocities are calculated using the great-circle approximation and the formulation of Takeuchi and Saito (1972) (13). Sensitivity kernels with respect to group velocities are constructed from the partial derivatives of phase velocities following Rodi et al. (1975) (14). 
-  </p>
-
-  <p>
-   The sensitivity kernels have several important characteristics. As wave period increases, the peak sensitivity is at larger depths. With increasing overtone number, the number of peaks in the kernels increases. Overtones are more sensitive to structure below ~300 km depth than fundamental modes. The sensitivity kernels with respect to group velocity have maxima at shallower depths than the phase velocity kernels for the same wave period. This indicates that group velocity data are more sensitive to shallower structure (e.g., Lebedev et al., 2013) (15). Finally, the sensitivity kernels of Rayleigh waves and Love waves with respect to anisotropy have opposite signs. 
- </p>
-
- <p>
-
-  Body-wave travel-time sensitivity kernels are calculated using the formalism of Woodhouse (1981) (16) and Woodhouse and Girnius (1982) (17). The sensitivity kernels with respect to δυS are always negative, since positive velocity perturbations along the paths always reduce the travel times. The sign of the sensitivity kernels of S phases with respect to  δζ<sub>S</sub> depends on the traveling angle. The SKS sensitivity kernels with respect to  δζ<sub>S</sub> are always positive, because SKS phases are always sensitive to the SV wavespeed. Thus, positive anisotropic perturbations (V<sub>SH</sub> > V<sub>SV</sub>) increase SKS travel times. 
-</p>
-<p>
-
-  Sensitivity kernels with respect to crustal thickness are calculated using the formulation of Woodhouse and Dahlen (1978) (18) for the phase velocity data and by numerical differentiation for the group velocities and travel times. 
-</p>
-
-<p> 
-  Physical dispersion effects due to attenuation by following the same approach as in PREM (Dziewonski & Anderson, 1981) (19) were taken into account. Specifically, attenuation is implemented using PREM’s five-layer attenuation model with constant-Q logarithmic dispersion laws and a reference frequency of 1 Hz. While it is known that the effect of attenuation on inversions of body waves and normal modes can be large, it is difficult to constrain it robustly in global tomographic inversions (e.g., Montagner and Kennett, 1996) (20).
-</p>
-
-<h3> Crustal effects </h3>
-
-<p> 
-  Crustal effects of the crust on the data were taken into account in two steps. Firstly, we apply crustal corrections to all the data used in the inversions using the global crustal model CRUST2.0 (Bassin et al., 2000) (21). We calculate crustal corrections for the surface wave data following the same approach as that of Ferreira et al. (2010) (9). We superimpose the CRUST2.0 model on PREM and calculate the local eigenfrequencies of the surface wave-equivalent modes in the 2° x 2° grid of CRUST2.0. The path-integrated phase or group velocity perturbation is then subtracted from each individual measurement. It is much easier to correct the effect of crustal structure on surface-wave dispersion data than on waveforms, since local eigenfrequencies can be calculated exactly using normal mode theory (e.g., Takeuchi and Saito, 1972) (13) taking non-linear effects fully into account. On the other hand, the crustal corrections of the body-wave travel-times are obtained from cross-correlations of arrival time measurements on normal mode summation synthetic seismograms. Different crustal models are used beneath the source and the receiver according to the model CRUST2.0 (Ritsema et al., 2009) (22). 
-</p>
-
-
-<p> 
-  Secondly, we estimate crustal thickness perturbations from CRUST2.0 from our joint inversions. Given that the data are corrected for CRUST2.0, we use crustal thickness sensitivity kernels computed for PREM, which is a computationally efficient strategy. Nonlinear crustal effects are much alleviated by the crustal corrections, so the use of 1-D sensitivity kernels for crustal thickness, mantle velocity and mantle anisotropy is reasonable. Moreover, Kustowski et al. (2007) (23) showed that while considering lateral variations in the sensitivity kernels may somewhat affect the amplitudes of the retrieved anomalies in the inversions, the effect on the pattern of heterogeneity is minor. 
-</p>
-
-<h3> Parameterisation and Inversion Scheme</h3>
-
-<p> 
-  We use spherical harmonic basis functions expanded up to degree 35 to parameterize the horizontal variation in υ<sub>S</sub>, ζ<sub>S</sub>, and d, corresponding to a minimum grid side length of ~600 km. A total of 21 depth spline functions parameterize variations in the radial direction (see, e.g., Figure 4 in Ritsema et al., 2004) (24). 
-</p>
-<p> 
-  We solve the inverse problem in Equation (7) using a damped least-squares inversion scheme, and we use the 1-D reference model PREM as the starting model. Following a similar approach to Ferreira et al. (2010) (9), we build the inner-product matrix of the sensitivity kernels, which is inverted using an eigenvalue decomposition scheme. We invert for a total of 55,728 parameters: 1,296 model coefficients for crustal thickness perturbations, 27,216 for isotropic variations and 27,216 for anisotropic variations. In order to stabilize the inversions, we apply norm damping for horizontal regularization; no explicit radial damping is imposed in the inversions. Since the resolving power of the data is weaker for anisotropy than for isotropic structure, it is necessary to apply stronger damping to the anisotropic parameters than to the isotropic parameters. By experimentation, we found that by applying ~1.3 times more damping to the anisotropic parameters than to the isotropic parameters helped suppress apparently artificial small scale perturbations in the retrieved anisotropy models while keeping persistent large-scale structures. 
-</p>
-<p> 
-  We weigh each source-receiver path according to the number of similar paths within clusters of paths 1° from the station and from the event’s location. This homogenizes the source-receiver path distribution in the inversions and optimizes the balance between the various data sets used. 
-</p>
-</div>
-</div>
-<div id="References">
-  <div class="container-fluid">
-    <h2>References</h2>
-    <div id="ReferencesStyle">
-      <p>
-        <ol type="1">
-          <li>Ekström, G., J. Tromp, and E.W.F. Larson (1997), Measurements and global models of surface wave propagation, J. Geophys. Res., 102, 8137-8157.</li>
-          <li>Ekström, G. (2011), A global model of Love and Rayleigh surface wave dispersion and anisotropy, 25-250s, Geophys. J. Int., 187, 1668-1686</li>
-          <li>van Heijst, H.J., and J. Woodhouse (1999), Global high-resolution phase velocity distributions of overtone and fundamental-mode surface waves determined by mode branch stripping, Geophys. J. Int., 137, 601-620</li>
-          <li>Ritsema, J., and H.J. van Heijst (2004), Global transition zone tomography, J. Geophys. Res., 109, B02302, doi:10.1029/2003JB002610</li>
-          <li>Visser, K., J. Trampert, S. Lebedev, and B.L.N. Kennett (2008), Probability of radial anisotropy in the deep mantle, Earth Planet. Sci. Lett., 270, 241-250.</li>
-          <li>Ritsema, J., A. Deuss, H.J. van Heijst, and J.H. Woodhouse (2011), S40RTS: a degree-40 shear-velocity model for the mantle from new Rayleigh wave dispersion, teleseismic traveltime and normal-mode splitting function measurements, Geophys. J. Int., 184, 1223-1236.</li>
-          <li>Ritzwoller, M.H., and A.L. Levshin (1998), Eurasian surface wave tomography: Group velocities, J. Geophys. Res., 103, 4839-4878.</li>
-          <li>Ritsema, J., A. Deuss, H.J. van Heijst, and J.H. Woodhouse (2011), S40RTS: a degree-40 shear-velocity model for the mantle from new Rayleigh wave dispersion, teleseismic traveltime and normal-mode splitting function measurements, Geophys. J. Int., 184, 1223-1236.</li>
-          <li>Ferreira, A.M.G., J.H. Woodhouse, K. Visser, and J. Trampert (2010), On the robustness of global radially anisotropic surface wave tomography, J. Geophys. Res., 115, B04313, doi:10.1029/2009JB006716.</li>
-          <li>Robertson, G.S., and J.H. Woodhouse (1995), Evidence for proportionality of P and S heterogeneity in the lower mantle, Geophys. J. Int., 123, 85-116.</li>
-          <li>Anderson, O.L., E. Schreiber, R.C. Liebermann, and N. Soga (1968), Some elastic constant data on minerals relevant to geophysics, Rev. Geophys., 6, 491-524.</li>
-          <li>Ishii, M., and J. Tromp (1999), Normal-mode and free-air grativty constraints on lateral variations in velocity and density of Earth’s mantle, Science, 285, 1231-1236.</li>
-          <li>Takeuchi, H., and M. Saito (1972), Seismic surface waves. In: Bolt, B.A. (Ed.), Methods of Computational Physics, Vol. 11, Academic Press, New York, pp. 217-295.</li>
-          <li>Rodi, W.L., P. Glover T.M.C. Li, and S.S. Alexander (1975), A fast, accurate method for computing group-velocity partial derivatives for Rayleigh and Love modes, Bull. Seism. Soc. Am., 65, 1105-1114.</li>
-          <li>Lebedev, S., J.M.-C. Adam, and T. Meier (2013), Mapping the Moho with seismic surface waves: A review, resolution analysis, and recommended inversion strategies, Tectonophysics, 609, 377-394, doi:10.1016/j.tecto.2012.12.030.</li>
-          <li>Woodhouse, J.H. (1981), A note on the calculation of travel times in a transversely isotropic Earth model, Phys. Earth Planet. Inter., 25, 357-359.</li>
-          <li>Woodhouse, J.H., and T.P. Girnius (1982), The calculation of dΔ/dp and of partial derivatives for travel-time inversion in transversely isotropic spherical earth models. In Seismic Discrimination, Semiannual Technical Summary Report to the Defense Advanced Research Projects Agency, MIT, Lincoln Lab., Lexington, Massachusetts, pp. 61-65.</li>
-          <li>Woodhouse, J.H., and F.A. Dahlen (1978) The effect of a general aspherical perturbation on the free oscillations of the Earth, Geophys. J. R. Astr. Soc., 53, 335-354.</li>
-          <li>Dziewoński, A.M., and D.L. Anderson (1981), Preliminary reference Earth model. Phys. Earth Planet. Inter., 25, 297-356.</li>
-          <li>Montagner, J.-P., and B.L.N. Kennett (1996), How to reconcile body-wave and normal-mode reference Earth models, Geophys. J. Int., 125, 229-248.</li>
-          <li>Bassin, C., G. Laske, and G. Masters (2000), The current limits of resolution for surface wave tomography in North America, Eos Trans. AGU, 81, Abstract S12A-03.</li>
-          <li>Ritsema, J., H.J. van Heijst, J.H. Woodhouse, and A. Deuss (2009), Long-period body wave traveltimes through the crust: implication for crustal corrections and seismic tomography, Geophys. J. Int., 179, 1255-1261</li>
-          <li>Kustowski, B., A.M. Dziewoński, and G. Ekström (2007), Nonlinear crustal corrections for normal-mode seismograms. Bull. Seism. Soc. Am., 97, 1756-1762.</li>
-
-        </ol>  
-
-
-
-      </p>
-
-    </div>
-
-  </p>
-</div>
-</div>
 
 </div>
 
@@ -295,7 +163,15 @@
 
 
 </div>
+<div id="datamethod">
+<h2>
 
+
+
+<button type="button" class="button" onclick="window.location.href='datamethod'" >Want to know more?</button>
+
+</h2>
+</div>
 <div id="footer">
   <div class="container-table">
 

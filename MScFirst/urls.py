@@ -16,15 +16,26 @@ Including another URLconf
 from django.conf.urls import include, url
 from django.contrib import admin
 from home import views
+from tomographic_db import views
 from django.conf import settings
 from django.conf.urls.static import static
+from django.conf.urls import patterns
+from django.contrib.staticfiles import views
 
 urlpatterns = [
     url(r'^$', 'home.views.index'),
+    url(r'^download/$', 'home.views.download', name='download'),
+    url(r'^download/downloadfile/$', 'home.views.downloadfile', name='downloadfile'),
     url(r'^tomographic_db/', include('tomographic_db.urls', namespace="tomographic_db")),
     url(r'^admin/', include(admin.site.urls)),
+
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 
 
+if settings.DEBUG:
+    urlpatterns += patterns('',
+        (r'^500/$', 'home.views.error500'),
+        (r'^404/$', 'home.views.error404'),
+    )
 

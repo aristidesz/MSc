@@ -11,8 +11,6 @@ b{font-size: 110%;}
 em{color: red;}
 
 #maincontainer{
-  margin-left:20px;
-  margin-right:20px;
   height:auto;
   position: relative;
   padding-top:50px;
@@ -112,7 +110,7 @@ display:inline-block;
 
 #footer{
 clear: both;
-position: absolute;
+position: fixed;
 width: 100%;
 bottom:0;
 background: #363636;
@@ -141,13 +139,13 @@ color: #9C9C9C;
 }
 #fds img { width: 50%; opacity: 0; display: inline-block; overflow: hidden;}
 
-@keyframes fdsseq { 100% { opacity: 1; width: 100%; padding: 10px;} }
+@keyframes fdsseq { 100% { opacity: 1; width: 50%; padding: 10px;} }
 #fds img { animation: fdsseq .2s forwards; }
 
 
 h2 {
     text-align: center;
-    color:#1919ff;
+    color:black;
 }
 
 h3 {

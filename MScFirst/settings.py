@@ -86,10 +86,11 @@ DATABASES = {
     'default': {
        'ENGINE': 'django.db.backends.mysql', 
         'NAME': 'myproject',
+        'TEST_NAME': 'test_myproject',
         'USER': 'myprojectuser',
         'PASSWORD': 'aris1!',
         'HOST': 'localhost',   # Or an IP Address that your DB is hosted on
-        'PORT': '',		
+        'PORT': '',	
     }
 }
 
