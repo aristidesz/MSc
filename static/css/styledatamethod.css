@@ -202,7 +202,7 @@ height:auto;
 }
 #footer{
 clear: both;
-position: absolute;
+position: fixed;
 width: 100%;
 bottom:0;
 background: #363636;
