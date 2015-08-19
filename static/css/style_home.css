@@ -155,6 +155,8 @@ h3 {
 p{
     text-align: justify;
     text-justify: inter-word;
+    margin-bottom: 20px;
+
 }
 
 .innertube b {
@@ -210,7 +212,7 @@ height:auto;
 }
 #footer{
 clear: both;
-position: absolute;
+position: fixed;
 width: 100%;
 bottom:0;
 background: #363636;

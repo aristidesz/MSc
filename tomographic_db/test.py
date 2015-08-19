@@ -8,6 +8,20 @@ from tomographic_db.forms import FormGMTImage
 from tomographic_db.tasks import subpro
 from django.test import Client
 import unittest
+from django.conf import settings
+from django.test import LiveServerTestCase
+from selenium.webdriver.firefox.webdriver import WebDriver
+from django.contrib.staticfiles.testing import StaticLiveServerTestCase
+from django.contrib.staticfiles.storage import staticfiles_storage #The file storage engine to use when collecting static files with the collectstatic management command.
+from django.contrib.staticfiles import finders
+from selenium import webdriver
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.support.ui import Select
+from selenium.common.exceptions import NoSuchElementException
+from selenium.common.exceptions import NoAlertPresentException
+import unittest, time, re
 
 class ImagesTestCase(TestCase):
     def setUp(self):
@@ -108,3 +122,68 @@ class SimpleTest(unittest.TestCase):
         client = Client()
         response = client.get('/download/downloadfile/')
         self.assertEqual(response.status_code, 200)
+
+
+class Seleniumpython(unittest.TestCase):
+    def setUp(self):
+        self.driver = webdriver.Firefox()
+        self.driver.implicitly_wait(30)
+        self.base_url = "http://localhost:8000/"
+        self.verificationErrors = []
+        self.accept_next_alert = True
+    
+    def test_seleniumpython(self):
+        driver = self.driver
+        driver.get(self.base_url + "/")
+        driver.find_element_by_css_selector("button.button").click()
+        driver.find_element_by_css_selector("button.button").click()
+        Select(driver.find_element_by_id("lonMAX")).select_by_visible_text("19")
+        Select(driver.find_element_by_id("lonMAX")).select_by_visible_text("19")
+        Select(driver.find_element_by_id("lonMIN")).select_by_visible_text("19")
+        Select(driver.find_element_by_id("lonMIN")).select_by_visible_text("19")
+        Select(driver.find_element_by_id("latMAX")).select_by_visible_text("11")
+        Select(driver.find_element_by_id("latMAX")).select_by_visible_text("11")
+        Select(driver.find_element_by_id("latMIN")).select_by_visible_text("2")
+        Select(driver.find_element_by_id("latMIN")).select_by_visible_text("2")
+        driver.find_element_by_css_selector("#formwrapper > form > input.btn").click()
+        driver.find_element_by_css_selector("#formwrapper > form > input.btn").click()
+        driver.find_element_by_css_selector("button.button").click()
+        driver.find_element_by_css_selector("button.button").click()
+        driver.find_element_by_css_selector("input.btn").click()
+        driver.find_element_by_css_selector("input.btn").click()
+        driver.find_element_by_css_selector("button.button").click()
+        driver.find_element_by_css_selector("button.button").click()
+        Select(driver.find_element_by_name("form_imageName")).select_by_visible_text("200KmRani")
+        Select(driver.find_element_by_name("form_imageName")).select_by_visible_text("200KmRani")
+        driver.find_element_by_xpath("(//input[@value='Submit'])[2]").click()
+        driver.find_element_by_xpath("(//input[@value='Submit'])[2]").click()
+        driver.find_element_by_css_selector("button.button").click()
+        driver.find_element_by_css_selector("button.button").click()
+    
+    def is_element_present(self, how, what):
+        try: self.driver.find_element(by=how, value=what)
+        except NoSuchElementException, e: return False
+        return True
+    
+    def is_alert_present(self):
+        try: self.driver.switch_to_alert()
+        except NoAlertPresentException, e: return False
+        return True
+    
+    def close_alert_and_get_its_text(self):
+        try:
+            alert = self.driver.switch_to_alert()
+            alert_text = alert.text
+            if self.accept_next_alert:
+                alert.accept()
+            else:
+                alert.dismiss()
+            return alert_text
+        finally: self.accept_next_alert = True
+    
+    def tearDown(self):
+        self.driver.quit()
+        self.assertEqual([], self.verificationErrors)
+
+if __name__ == "__main__":
+    unittest.main()
