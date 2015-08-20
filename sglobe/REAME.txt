@@ -1,0 +1,40 @@
+
+%%%% SGLOBE-rani:
+
+- Commands for plotting isotropic structure:
+
+% ./plmod8.1 sglobe_v_0025 sglobe_v_0050 sglobe_v_0100 sglobe_v_0150 sglobe_v_0200 sglobe_v_0250 sglobe_v_0300 sglobe_v_0400
+
+% ./plmod8.2 sglobe_v_0500 sglobe_v_0600 sglobe_v_0700 sglobe_v_0800 sglobe_v_0900 sglobe_v_1000 sglobe_v_1100 sglobe_v_1200
+
+% ./plmod8.3 sglobe_v_1300 sglobe_v_1400 sglobe_v_1600 sglobe_v_1800 sglobe_v_2000 sglobe_v_2300 sglobe_v_2600 sglobe_v_2800
+
+This allows plotting depth slices throughout the whole isotropic model and builds three output .ps files, respectively:
+
+1.  sglobe_v_25_400.ps -- depth slices from 25 km to 400 km depth
+2. sglobe_v_500_1200.ps -- depth slices from 500 km to 1200 km depth
+3. sglobe_v_1300_2800.ps -- depth slices from 1300 km to 2800 km depth 
+
+- Commands for plotting radially anisotropic structure:
+
+% ./plmoda8.1 sglobe_a_0025 sglobe_a_0050 sglobe_a_0100 sglobe_a_0150 sglobe_a_0200 sglobe_a_0250 sglobe_a_0300 sglobe_a_0400
+
+% ./plmoda8.2 sglobe_a_0500 sglobe_a_0600 sglobe_a_0700 sglobe_a_0800 sglobe_a_0900 sglobe_a_1000 sglobe_a_1100 sglobe_a_1200
+
+./plmoda8.3 sglobe_a_1300 sglobe_a_1400 sglobe_a_1600 sglobe_a_1800 sglobe_a_2000 sglobe_a_2300 sglobe_a_2600 sglobe_a_2800
+
+Similarly to above, this allows plotting depth slices throughout the whole isotropic model and builds three output .ps files, respectively:
+
+1. sglobe_a_25_400.ps -- depth slices from 25 km to 400 km depth
+2. sglobe_a_500_1200.ps -- depth slices from 500 km to 1200 km depth
+3. sglobe_a_1300_2800.ps -- depth slices from 1300 km to 2800 km depth
+
+NOTES: 
+
+--- You can also use these scripts to plot one given depth slice -- e.g., if you want to plot Vs at 250 km depth, you can just type in:
+
+% ./plmod8.1 sglobe_v_0250
+
+(but bear in mind that you may need to change the max color scale in the script - variable mxcs)
+
+--- For the website, please only show depth slices below 100 km, as the model does not really constrain well shallower structure than this

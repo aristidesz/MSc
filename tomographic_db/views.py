@@ -32,7 +32,7 @@ from celery.task.base import task
 from celery.task.sets import subtask
 from celery import chain
 import pdb
-
+   
 def detail(request, imageName):
     return HttpResponse("You're looking at images with name %s." % imageName)
 
@@ -155,4 +155,8 @@ def imageWithID(request, id):
 
 def datamethod(request):
 	template = loader.get_template('tomographic_db/datamethod.html')
+	return HttpResponse(template.render())
+
+def about(request):
+	template = loader.get_template('tomographic_db/about.html')
 	return HttpResponse(template.render())

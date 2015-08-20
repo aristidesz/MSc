@@ -1,0 +1,110 @@
+#!/bin/csh
+# GMT script to plot depth slices of SGLOBE-rani (anisotropic structure) from 500 km to 1200 km depth 
+
+
+set dy = -2.9
+set dysp = .3
+set tst = 
+set dx = 4.7
+set ypwmx = .4
+set lmin = 1
+set lmax = 40
+gmt gmtset MAP_TICK_LENGTH_PRIMARY 0.01 MAP_TICK_LENGTH_SECONDARY 0.01 FONT_ANNOT_PRIMARY 10 FONT_ANNOT_SECONDARY 10
+
+set ipwsp = y
+set isp=2
+set icont = 1
+set col = gu1
+
+set reg = 0/360/-90/90
+set prjwd=9.0
+set proj = Kf135/$prjwd
+
+set plbfl = plate_boundaries.gmt
+set hpfl = hotspots.gmt
+
+set dxb = 10.
+set dyb = 6.
+set xbm = 8.5
+
+# set translations of images
+# title on page
+set ytt = 26.
+set xtt = $xbm
+set ymp = 15.0
+set xmp = .5
+set ystrt = -5.0
+set xstrt = -7.5
+
+set trx = `echo $xstrt $dxb -$dxb $dxb -$dxb $dxb -$dxb $dxb`
+set try = `echo $ystrt 0 -$dyb 0 -$dyb 0 -$dyb 0`
+
+set npl = $#argv 
+
+## title of the plot
+ set btt="SGLOBE-rani - Radial anisotropy"
+ echo 0 1 14 0 4 2 $btt > titel
+ gmt pstext -R-1/1/0/1 -JX4/1 titel -K -V -N -Y$ytt -X$xtt -P  > uit.ps
+
+# set maxima for colourscales (one maximum per depth slice)
+set mxcs = `echo 2 2 2 2 2 2 2 2`
+set ilr = r
+
+@ i=0
+ while ($i < $npl )
+  @ i++
+
+  if($ilr == r) then
+   set ilr = l
+  else
+   set ilr = r
+  endif
+
+  echo $i
+  echo $argv[$i]
+
+ set colfl = "col_"$mxcs[$i]".cpt"
+
+# build the model's grid 
+
+gmt  surface $argv[$i] -Guit1.grd -I$isp -N2 -R$reg -fg
+
+gmt  grdsample uit1.grd -Guit.grd -I2 -n+b  -fg
+
+# plot the model perturbations
+
+  if($i == 1 ) then
+gmt   grdimage uit.grd -C$colfl -J$proj -R$reg -fg -K -Y$try[$i] -X$trx[$i] -O -P >> uit.ps
+  else
+gmt   grdimage uit.grd -C$colfl -J$proj -R$reg -fg -K -O -Y$try[$i] -X$trx[$i] >> uit.ps
+  endif
+
+# plot the continental contours
+ 
+gmt  pscoast -R -J$proj -Bg45/g45 -Dc -A5000 -W1 -K -O >> uit.ps
+
+## title of each subplot
+
+set dpt = `echo $argv[$i] | cut -c10-13 `
+set btt="$dpt km   max = ${mxcs[$i]} (%)"
+ echo 180 90 14 0 4 2 $btt > titel
+
+ gmt  pstext titel -R -J$proj -O -K -V -N -Y0.2  >> uit.ps
+
+## plot hotspots and plate boundaries
+
+gmt  psxy  -R -J$proj $plbfl  -W0.8,green -O -K -Y-0.2 >> uit.ps
+gmt  psxy $hpfl -R -J$proj -L -O -Sc0.08  -Gred -K  >> uit.ps
+
+end
+
+# basemap for psscale
+set xbm = -0.25
+set dybm = -.2
+
+#plot the colour scale
+gmt gmtset FONT_ANNOT_PRIMARY 0.1 
+
+ gmt psscale -D0.0/0.0/10.0/0.15h -X0. -Y-1.0 -O -C$colfl   -L -V  >> uit.ps
+
+mv uit.ps sglobe_a_500_1200.ps
