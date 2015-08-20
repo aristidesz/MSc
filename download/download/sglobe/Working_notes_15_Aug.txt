@@ -1,0 +1,18 @@
+
+I have been working on dofig-3 and plmod8 so that it does not need to use Fortran codes. In particular, I have built the files:
+
+*D*raw
+
+and the 
+
+*crap_v_*
+
+and
+
+crap_a_*
+
+files
+
+which have xyz grids with SGLOBE-rani. Now I just need to modify plmod8 to get it to look right (i.e., in particular the color scale ranges, the text annotations, etc). 
+
+./plmod8 crap_v_0025 crap_v_0050 crap_v_0100 crap_v_0150 crap_v_0200 crap_v_0250 crap_v_0300 crap_v_0400 crap_v_0500 crap_v_0600 crap_v_0700 crap_v_0800 crap_v_0900 crap_v_1000 crap_v_1100 crap_v_1200 crap_v_1300 crap_v_1400 crap_v_1600 crap_v_1800 crap_v_2000 crap_v_2300 crap_v_2600 crap_v_2800

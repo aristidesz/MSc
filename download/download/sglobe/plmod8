@@ -1,0 +1,156 @@
+#-f
+set dy = -2.9
+set dysp = .3
+set tst = 
+set dx = 4.7
+set mxc = $1
+set ypwmx = .4
+set lmin = 1
+set lmax = 40
+gmt gmtset MAP_TICK_LENGTH_PRIMARY 0.01 MAP_TICK_LENGTH_SECONDARY 0.01 FONT_ANNOT_PRIMARY 10 FONT_ANNOT_SECONDARY 10
+
+# gmt gmtset ANOT_FONT Times-Roman ANOT_FONT_SIZE 10
+
+set ipwsp = y
+set isp=2
+set colfl = col_7.cpt
+set icont = 1
+#set col = rb
+set col = gu1
+
+set reg = 0/360/-90/90
+set prjwd=9.0
+#set proj = H180/$prjwd
+set proj = Kf135/$prjwd
+#set proj = x0.013d
+
+#makecpt -C.4 -S10c -M0 > rainbow.cpt
+
+set plbfl = plate_boundaries.gmt
+set hpfl = hotspots.gmt
+
+#set dxb = 4.
+set dxb = 10.
+#set dyb = 2.3
+set dyb = 6.
+set xbm = 8.5
+
+# set translations of images
+# title on page
+#set ytt = 9.6
+#set ytt = 22.0
+set ytt = 26.
+set xtt = $xbm
+# 1st map
+#set ymp = 8.3
+set ymp = 15.0
+set xmp = .5
+#set xstrt = -3.6
+##set ystrt = -0.2
+set ystrt = -5.0
+set xstrt = -7.5
+#set ystrt = -1.3
+#set ystrt = 8.0
+
+set trx = `echo $xstrt $dxb -$dxb $dxb -$dxb $dxb -$dxb $dxb`
+set try = `echo $ystrt 0 -$dyb 0 -$dyb 0 -$dyb 0`
+
+set npl = $#argv 
+
+## title
+# set btt=$argv[1]:r:r
+ set btt="SGLOBE-rani - Voigt average"
+ echo 0 1 14 0 4 2 $btt > titel
+ gmt pstext -R-1/1/0/1 -JX4/1 titel -K -V -N -Y$ytt -X$xtt -P  > uit.ps
+#endif
+
+# set maxima for colourscales
+#set mxcs = `echo 5 5 5 5 5 5 4 4`
+#set mxcs = `echo 7 7 5 5 5 5 3 3`
+#set mxcs = `echo 5 5 5 5 5 5 5 5`
+set mxcs = `echo 7 7 7 7 5 5 3 3`
+#set mxcs = `echo 4 4 4 4 3 3 2 2`
+#set mxcs = `echo 1 1 1 1 1 1 1 1`
+#set scaling = `echo 1.86427 0.99594 0.72682 0.63661 0.61617 0.65212 0.62769 0.71971`
+set ilr = r
+
+## set i=0
+@ i=0
+ while ($i < $npl )
+  @ i++
+
+  if($ilr == r) then
+   set ilr = l
+  else
+   set ilr = r
+  endif
+
+#  /home/sjchang/GRACE/bin/mkrb -mx $mxcs[$i] /home/sjchang/GRACE/gmt/colfls/${col}3.chj -c $icont  > $colfl
+
+# #   /home/sjchang/GRACE/bin/raw2xyz $argv[$i] crap -d $isp -l $lmin $lmax
+
+  echo $i
+  echo $argv[$i]
+
+#/gpfs/data/ferreira/ktf11dxu/concrap << !
+#$scaling[$i] 
+#!
+
+ set colfl = "col_"$mxcs[$i]".cpt"
+
+##  surface crap -Guit1.grd -I$isp -N2 -R$reg -fg
+
+gmt  surface $argv[$i] -Guit1.grd -I$isp -N2 -R$reg -fg
+
+gmt  grdsample uit1.grd -Guit.grd -I2 -n+b  -fg
+
+  if($i == 1 ) then
+gmt   grdimage uit.grd -C$colfl -J$proj -R$reg -fg -K -Y$try[$i] -X$trx[$i] -O -P >> uit.ps
+  else
+gmt   grdimage uit.grd -C$colfl -J$proj -R$reg -fg -K -O -Y$try[$i] -X$trx[$i] >> uit.ps
+  endif
+ 
+## gmt  pscoast -R -J$proj -Bg45/g45 -Dc -A5000 -W2/0/0/0 -K -O >> uit.ps
+
+gmt  pscoast -R -J$proj -Bg45/g45 -Dc -A5000 -W1 -K -O >> uit.ps
+
+  ## title
+#  set dum = `echo $argv[$i]:r:e | /home/sjchang/GRACE/bin/exln -d 2 5`
+#  if ($dum < 100) then
+#   set dpt = `echo $argv[$i]:r:e | /home/sjchang/GRACE/bin/exln -d 4 5`
+#  else if ($dum < 1000) then
+#   set dpt = `echo $argv[$i]:r:e | /home/sjchang/GRACE/bin/exln -d 3 5`
+#  else
+#   set dpt = `echo $argv[$i]:r:e | /home/sjchang/GRACE/bin/exln -d 2 5`
+#  endif
+#  set title = "$dpt km   max = ${mxcs[$i]} (%)"
+#  /home/sjchang/GRACE/bin/mktit "$title" -ym 90 -fsz 11 -hf 1.20 -xm 180.
+
+# set btt=$argv[$i]:r:r
+
+set dpt = `echo $argv[$i] | cut -c8-11 `
+set btt="$dpt km   max = ${mxcs[$i]} (%)"
+ echo 180 90 14 0 4 2 $btt > titel
+
+ gmt  pstext titel -R -J$proj -O -K -V -N -Y0.2  >> uit.ps
+
+  ## hotspots and plate boundaries
+
+#### gmt  psxy  -R -J$proj $plbfl  -W0.8,green -O -K  -Y-0.2>> uit.ps
+gmt  psxy  -R -J$proj $plbfl  -W0.8,green -O -K -Y-0.2 >> uit.ps
+gmt  psxy $hpfl -R -J$proj -L -O -Sc0.08  -Gred -K  >> uit.ps
+
+end
+
+# basemap for psscale
+#set xbm = 4.
+set xbm = -0.25
+set dybm = -.2
+#.. psbasemap -JX.1/.1  -R0/1/0/1 -X$xbm -Y$dybm -Ba1/a1 -O -K  >> uit.ps
+
+
+# colour scale
+gmt gmtset FONT_ANNOT_PRIMARY 0.1 
+
+#psscale -D0.0/0.0/3.5/0.15h -X0. -Y0. -O -C$colfl -K | nogrep 'E -2 div' >> uit.ps
+ gmt psscale -D0.0/0.0/10.0/0.15h -X0. -Y-1.0 -O -C$colfl   -L -V  >> uit.ps
