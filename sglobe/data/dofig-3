@@ -1,0 +1,51 @@
+#!/bin/csh
+set model = $1
+set dir=$model:h
+
+echo $model
+pwd
+
+##/home/sjchang/GRACE/bin/depmap $model -d 25 50 100 150 200 250 300 400 500 600 700 800 900 1000 1100 1200 1300 1400 1600 1800 2000 2300 2600 2800
+
+echo "did depmap"
+
+set md2 =  $model:r:t
+echo $md2
+
+## mv $md2.D* $dir
+
+set md =  $model:r
+echo $md
+
+set fls = `ls $md.D*`
+
+set inp1 = " $fls[1] $fls[2] $fls[3] $fls[4] $fls[5] $fls[6] $fls[7] $fls[8] "
+set inp2 = " $fls[9] $fls[10] $fls[11] $fls[12] $fls[13] $fls[14] $fls[15] $fls[16] "
+set inp3 = " $fls[17] $fls[18] $fls[19] $fls[20] $fls[21] $fls[22] $fls[23] $fls[24] "
+
+echo "going to plmod8"
+./plmod8 $inp1 
+
+echo "did plmod8"
+
+#echo -n "   print this model ( y/n ) ? "
+#set rep = $<
+#if($rep == y ) then
+# lpr -Poptrac uit.ps
+#endif
+
+mv uit.ps fm1.25_400.ps
+/home/sjchang/GRACE/3d_plot/plmod8.2 $inp2
+#echo -n "   print this model ( y/n ) ? "
+#set rep = $<
+#if($rep == y ) then
+ #lpr -Poptrac uit.ps
+#endif
+
+mv uit.ps fm1.500_1200.ps
+
+/home/sjchang/GRACE/3d_plot/plmod8.3 $inp3
+
+mv uit.ps fm1.1300_2800.ps
+
+rm *.raw

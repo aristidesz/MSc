@@ -110,9 +110,23 @@
 
       <form action="/tomographic_db/image/" method="GET" >
         <p>Select Depth:
-          <select id='demo' name='form_Depth'>
-      <!--<option value="100">100</option>
-      <option value="200">200</option> -->
+          <select name='form_Depth'>
+            <option value="1">250</option>
+            <option value="2">350</option> 
+            <option value="3">410</option>
+            <option value="4">660</option> 
+            <option value="5">800</option>
+            <option value="6">900</option> 
+            <option value="7">1000</option>
+            <option value="8">1200</option> 
+            <option value="9">1400</option>
+            <option value="10">1600</option> 
+            <option value="11">1800</option>
+            <option value="12">2000</option> 
+            <option value="13">2200</option>
+            <option value="14">2400</option> 
+            <option value="15">2600</option> 
+            <option value="16">2800</option> 
     </select>
   </p>
   <p>Select Max Longitude:
@@ -216,19 +230,19 @@ Aristides Zenonos
 <!--
 -->
 <script type="text/javascript">
-  function myFunction(selector)
-  {
-    var i;
-    var j;
-    j=100;
-    for (i=1;i<=10;i++){
+//   function myFunction(selector)
+//   {
+//     var i;
+//     var j;
+//     j=100;
+//     for (i=1;i<=10;i++){
 
-      selector.options[i-1] = new Option(j,j);
-      j=j+100;
-    }
-  }
-//usage:
-myFunction(document.getElementById("demo"));
+//       selector.options[i-1] = new Option(j,j);
+//       j=j+100;
+//     }
+//   }
+// //usage:
+// myFunction(document.getElementById("demo"));
 function lat(selector)
 {
   var i;

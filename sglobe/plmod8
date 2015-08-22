@@ -1,4 +1,4 @@
-#-f
+#!/bin/csh
 set dy = -2.9
 set dysp = .3
 set tst = 
