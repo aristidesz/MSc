@@ -97,6 +97,8 @@ def image(request):
 		gmtImageName = GMTDepth+GMTlatMAX+GMTlatMIN+GMTlonMAX+GMTlonMIN
 		print GMTlatMAX, GMTlatMIN,GMTlonMAX,GMTlonMIN, GMTDepth,gmtImageName	
 		print "GMT depth= "+GMTDepth
+		print "GMT LATMAX= "+GMTlatMAX
+		print "GMT LATMIN= "+GMTlatMIN
 		flName=gmtImages.objects.filter(gmtImageName=gmtImageName)
 
 		if flName.count() == 0:
@@ -131,7 +133,7 @@ def image(request):
 			convert $OUTFILEmy.eps $OUTFILEmy.jpg
 			rm $OUTFILEmy.eps;
 			rm $OUTFILEmy.ps tmp.*;
-			''',gmtImageName,GMTDepth)
+			''',gmtImageName,GMTDepth,GMTlonMAX,GMTlonMIN,GMTlatMAX,GMTlatMIN)
 			prc1.get()
 			pic = gmtImages()
 			pic.gmtImageName = gmtImageName

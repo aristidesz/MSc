@@ -45,6 +45,7 @@ INSTALLED_APPS = (
     'tomographic_db',
     'djcelery',
     'kombu.transport.django',
+    'django_mathjax',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -123,3 +124,4 @@ MEDIA_URL = '/media/'
 
 
 BROKER_URL = 'django://'
+MATHJAX_ENABLED=True
